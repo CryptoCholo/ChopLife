@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/dist/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vite + React</title>
+  </head>
+  <body>
+    <div id="root" ></div>
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+    <script>
+        let socket = null;
+
+        window.addEventListener('load', () => {
+           
+            socket = io();
+          
+
+            
+
+           
+
+            socket.emit('loaded', { event: 'loaded', data: { name } })
+          
+
+            // // socket.on('join_error', function (data) {
+            // //     if (!localStorage.getItem('player')) {
+            // //         console.log('server_says', data)
+            // //         window.alert(data.message)
+                   
+            // //     }
+            // })
+
+            // socket.on('new_game_master', function (event) {
+            //     console.log('server_says', event)
+
+            //     const alreadyInGame = localStorage.getItem('player');
+
+            //     if (!alreadyInGame) return;
+            //     const players = event.data
+
+            //     const player = players.find(player => player.id === socket.id);
+
+            //     localStorage.setItem('player', JSON.stringify(player));
+
+            //     form.innerHTML = ''
+
+            //     createQnA(player);
+            //     if (player.isGameMaster) {
+            //         createChat(event, 'You are now the game master')
+            //     } else {
+            //         // createChat(event)
+            //     }
+            // })
+
+            // socket.on('time', function (event) {
+            //     const timer = document.getElementById('timer')
+            //     timer.innerHTML = `${event.message}s`;
+            // })
+
+            socket.on('general_message', function (event) {
+                // createChat(event)
+            })
+
+            socket.on('time_expired', function (event) {
+                // createChat(event)
+            })
+
+            socket.on('guess', function (event) {
+                // createChat(event)
+            })
+
+            socket.on('question_created', function (event) {
+                // createChat(event)
+            })
+
+        //     socket.on('player_joined', function (event) {
+        //         console.log('server_says', event)
+        //         // createChat(event)
+
+        //         player = event.data.player;
+
+        //         const alreadyInGame = localStorage.getItem('player');
+
+        //         if (!alreadyInGame) {
+        //             localStorage.setItem('player', JSON.stringify(player));
+        //         }
+
+        //         if (!alreadyInGame) {
+        //             createQnA(player);
+        //         }
+
+        //         if (!player.isGameMaster && !alreadyInGame) {
+        //             createChat(event, `Welcome to the game "${event.data.player.name}"". Our Game Master "${event.data.gameMaster.name}" is creating a question`)
+        //         }
+        //     });
+        })
+    </script>
+    <script type="module" src="./src/main.jsx"></script>
+  </body>
+</html>
