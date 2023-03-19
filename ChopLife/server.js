@@ -1,14 +1,15 @@
 require('dotenv').config();
 const session = require('express-session');
 const express = require("express");
+
 const app = express();
 const http = require("http");
 const path = require('path');
-const Restaurant = require('./services/restaurant');
+const Restaurant = require('./server/services/restaurant');
 const moment = require('moment')
 
 const server = http.createServer(app);
-const {connect} = require('./db/db');
+const {connect} = require('./server/db/db');
 const mongooseStore = require('connect-mongo');
 
 //Initialize socket.io
@@ -19,7 +20,7 @@ const io = new Server(server);
 connect();
 
 
-app.use(express.static(path.resolve(__dirname, '../index.html')));
+app.use(express.static(`${process.cwd()}/dist/`))
 
 
 
@@ -50,14 +51,12 @@ const sessionMiddleware = session(sesh)
 
 io.engine.use(sessionMiddleware);
 
-app.get("/", (req, res) => {
-
- 
-  var options = {
-    root: path.join(__dirname, '../dist'),
+app.get(async (req,res)=>{
+  await res.sendFile(path.join(__dirname, '/dist/index'), (err)=> {
+  if (err) {
+    res.status(500).send(err)
   }
- 
-  res.sendFile("/index.html", options);
+})
 });
 
 const restaurant = new Restaurant();
@@ -165,6 +164,9 @@ io.on("connection", (socket) => {
   })    
 })
 
-server.listen(process.env.PORT, () => {
-  console.log("listening on *:4000");
-})
+
+// Start the server
+const port = process.env.PORT || 3000;
+server.listen(port, () => {
+  console.log(`Server running on http://localhost:${port}`);
+});
