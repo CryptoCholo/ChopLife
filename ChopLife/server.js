@@ -36,6 +36,7 @@ const sesh = {
   store: store,
   cookie: {
     name: "sessionId",
+    domain: "choplife-restaurant.onrender.com",
     maxAge: 604800000,//number of milliseconds in a week
     secure: false 
   },
