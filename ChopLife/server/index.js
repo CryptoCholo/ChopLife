@@ -19,7 +19,7 @@ const io = new Server(server);
 connect();
 
 
-app.use(express.static(path.resolve(__dirname, '../dist')));
+app.use(express.static(path.resolve(__dirname, '../index.html')));
 
 
 
