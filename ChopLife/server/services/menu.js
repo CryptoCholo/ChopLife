@@ -1,11 +1,5 @@
 const menuIndex = require('./utils');
 
-// class MenuItem {
-//     constructor(name, price) {
-//         this.name = name;
-//         this.price = price;
-//     }
-// }
 
 class Menu {
     constructor() {
@@ -18,11 +12,6 @@ class Menu {
     }
 
     
-
-    // removeItem(name) {
-    //     this.menuItems = this.menuItems.filter(item => item.name !== name);
-    // }
-
     getMenu() {
         return this.menuOptions;
     }

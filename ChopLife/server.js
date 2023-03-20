@@ -57,17 +57,21 @@ app.get(async (req,res)=>{
   if (err) {
     res.status(500).send(err)
   }
+})});
+
+app.get('*', function (req, res) {
+  res.sendFile(__dirname+'/dist/index.html');
 })
-});
 
 const restaurant = new Restaurant();
 
 io.on("connection", (socket) => {
 
   const sessionId = socket.request.session.id;
+  console.log(sessionId)
 
   socket.on('input_error', (event) => {
-    console.log(event)
+  
     socket.emit('menu', {namE:  "chatBot", bodY: " Oops! Your response is Invalid. Please respond with a valid input.", timE: `${moment().toLocaleString().split(' ')[4]}`,})
   })
  
@@ -101,10 +105,10 @@ io.on("connection", (socket) => {
     history.forEach(order => {
       order.items.forEach(oi => {
         let orderItem = `Item: ${oi[0]} - $${oi[1]}`;
-        socket.emit('menu', {namE:  "chatBot", bodY: orderItem, timE: `${moment().toLocaleString().split(' ')[4]}`});
+        socket.emit('history', {namE:  "chatBot", bodY: orderItem, timE: `${moment().toLocaleString().split(' ')[4]}`});
         })
       let  ordeR = `Order Id: ${order.id};  Total:  $${order.totalCost};`
-       socket.emit('menu', {namE:  "chatBot", bodY: ordeR, timE: `${moment().toLocaleString().split(' ')[4]}`});
+       socket.emit('hiistory', {namE:  "chatBot", bodY: ordeR, timE: `${moment().toLocaleString().split(' ')[4]}`});
     })
   })
 
